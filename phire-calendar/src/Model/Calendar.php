@@ -13,11 +13,11 @@ class Calendar extends AbstractModel
      * Get calendar by content type ID
      *
      * @param  int    $tid
-     * @return string
+     * @return View
      */
     public function getById($tid)
     {
-        $calendar = '';
+        $calendar = new View(__DIR__ . '/../../view/calendar.phtml');
 
         $sql = Table\Content::sql();
         $sql->select([
@@ -37,10 +37,11 @@ class Calendar extends AbstractModel
             $end   = $dateAry[0] . '-' . $dateAry[1] . '-' .
                 date('t', strtotime($dateAry[0] . '-' . $dateAry[1] . '-01')) . ' 23:59:59';
         } else {
-            $y     = date('Y');
-            $m     = date('m');
-            $start = $y . '-' . $m . '-01 00:00:00';
-            $end   = $y . '-' . $m . '-' .
+            $y          = date('Y');
+            $m          = date('m');
+            $this->date = $y . '-' . $m;
+            $start      = $y . '-' . $m . '-01 00:00:00';
+            $end        = $y . '-' . $m . '-' .
                 date('t', strtotime($y . '-' . $m . '-01')) . ' 23:59:59';
         }
 
@@ -59,11 +60,25 @@ class Calendar extends AbstractModel
             ]
         ];
 
-        $events = Table\Content::execute((string)$sql, $params)->rows();
-
-        //print_r($events);
+        $calendar->date       = $this->date;
+        $calendar->weekdays   = $this->weekdays;
+        $calendar->numOfWeeks = $this->getNumberOfWeeks();
+        $calendar->startDay   = date('D', strtotime($this->date));
+        $calendar->numOfDays  = date('t', strtotime($this->date));
+        //$calendar->events   = Table\Content::execute((string)$sql, $params)->rows();
 
         return $calendar;
+    }
+    /**
+     * Get number of weeks
+     *
+     * @return int
+     */
+    protected function getNumberOfWeeks()
+    {
+        $first = date("w", strtotime($this->date));
+        $last  = date("t", strtotime($this->date));
+        return (1 + ceil(($last - 7 + $first) / 7));
     }
 
 }

@@ -15,6 +15,9 @@ return [
                 'action'   => 'Phire\Calendar\Event\Calendar::parse',
                 'priority' => 1000
             ]
+        ],
+        'weekdays' => [
+            'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
         ]
     ]
 ];

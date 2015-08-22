@@ -1,0 +1,31 @@
+<table id="phire-calendar" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <th><?=implode('</th>' . PHP_EOL . '        <th>', $weekdays); ?></th>
+    </tr>
+<?php $i = 0; ?>
+<?php $d = 1; ?>
+<?php while ($i < $numOfWeeks): ?>
+    <tr>
+<?php for ($j = 0; $j < 7; $j++): ?>
+        <td><?php
+if ($i == 0):
+    if ($j >= array_search($startDay, $weekdays)):
+        echo $d;
+        $d++;
+    else:
+        echo '&nbsp;';
+    endif;
+else:
+    if ($d <= $numOfDays):
+        echo $d;
+        $d++;
+    else:
+        echo '&nbsp;';
+    endif;
+endif;
+?></td>
+<?php endfor; ?>
+    </tr>
+<?php $i++; ?>
+<?php endwhile; ?>
+</table>

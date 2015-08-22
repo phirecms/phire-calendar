@@ -23,7 +23,10 @@ class Calendar
                 (strpos($controller->view()->getTemplate()->getTemplate(), '[{calendar_') !== false)) {
                 $template = $controller->view()->getTemplate()->getTemplate();
                 $id       = substr($template, (strpos($template, '[{calendar_') + 11));
-                $calendar = new Model\Calendar(['date' => $controller->request()->getQuery('date')]);
+                $calendar = new Model\Calendar([
+                    'weekdays' => $application->module('phire-calendar')['weekdays'],
+                    'date'     => $controller->request()->getQuery('date')
+                ]);
                 $template = str_replace(
                     '[{calendar_' . $id . '}]',
                     $calendar->getById($id),
@@ -31,7 +34,10 @@ class Calendar
                 );
                 $controller->view()->getTemplate()->setTemplate($template);
             } else if (($controller instanceof \Phire\Content\Controller\IndexController) && ($controller->view()->isFile())) {
-                $controller->view()->phire->calendar = new Model\Calendar(['date' => $controller->request()->getQuery('date')]);
+                $controller->view()->phire->calendar = new Model\Calendar([
+                    'weekdays' => $application->module('phire-calendar')['weekdays'],
+                    'date'     => $controller->request()->getQuery('date')
+                ]);
             }
         }
     }
