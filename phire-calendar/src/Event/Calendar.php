@@ -47,7 +47,7 @@ class Calendar
             $body = $controller->response()->getBody();
 
             // Parse any calendar placeholders
-            $calendars = [];
+            $calendars   = [];
             $calendarIds = [];
 
             preg_match_all('/\[\{calendar.*\}\]/', $body, $calendars);
@@ -56,19 +56,19 @@ class Calendar
                     $id = substr($calendar, (strpos($calendar, '[{calendar_') + 11));
 
                     if ((strpos($id, '_') !== false)) {
-                        $id = substr($id, 0, strpos($id, '_'));
+                        $id      = substr($id, 0, strpos($id, '_'));
                         $replace = '[{calendar_' . $id . '_time}]';
-                        $time = true;
+                        $time    = true;
                     } else {
-                        $id = substr($id, 0, strpos($id, '}]'));
+                        $id      = substr($id, 0, strpos($id, '}]'));
                         $replace = '[{calendar_' . $id . '}]';
-                        $time = false;
+                        $time    = false;
                     }
 
                     $calendarIds[] = [
-                        'id' => $id,
+                        'id'      => $id,
                         'replace' => $replace,
-                        'time' => $time
+                        'time'    => $time
                     ];
                 }
             }
