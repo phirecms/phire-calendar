@@ -1,23 +1,42 @@
-<table id="phire-calendar" cellpadding="0" cellspacing="0" border="0">
-    <tr>
-        <th><?=implode('</th>' . PHP_EOL . '        <th>', $weekdays); ?></th>
-    </tr>
+<div id="phire-calendar-div">
+    <select id="phire-calendar-select" name="phire-calendar-select" onchange="window.location.href = window.location.href.substring(0, window.location.href.indexOf('?')) + '?date=' + this.value">
+<?php foreach ($monthOptions as $option => $value): ?>
+        <option value="<?=$option; ?>"<?php if ($date == $option): ?> selected="selected"<?php endif; ?>><?=$value; ?></option>
+<?php endforeach; ?>
+    </select>
+    <h2><?=date('F Y', strtotime($date)); ?></h2>
+    <table id="phire-calendar-table" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <th><?=implode('</th>' . PHP_EOL . '            <th>', $weekdays); ?></th>
+        </tr>
 <?php $i = 0; ?>
 <?php $d = 1; ?>
 <?php while ($i < $numOfWeeks): ?>
-    <tr>
+        <tr>
 <?php for ($j = 0; $j < 7; $j++): ?>
-        <td><?php
+            <td><?php
 if ($i == 0):
     if ($j >= array_search($startDay, $weekdays)):
-        echo $d;
+        echo '<h4>' . $d . '</h4>';
+        $curDay = $date . '-' . ((strlen($d) == 1) ? '0' . $d : $d);
+        if (isset($events[$curDay])):
+            foreach ($events[$curDay] as $event):
+                echo PHP_EOL . '                <div><a href="' . BASE_PATH . $event->uri . '">' . $event->title . (($time) ? ' (' . date('g:i A', strtotime($event->publish)) . ')' : null) . '</a></div>';
+            endforeach;
+        endif;
         $d++;
     else:
         echo '&nbsp;';
     endif;
 else:
     if ($d <= $numOfDays):
-        echo $d;
+        echo '<h4>' . $d . '</h4>';
+        $curDay = $date . '-' . ((strlen($d) == 1) ? '0' . $d : $d);
+        if (isset($events[$curDay])):
+            foreach ($events[$curDay] as $event):
+                echo PHP_EOL . '                <div><a href="' . BASE_PATH . $event->uri . '">' . $event->title . (($time) ? ' (' . date('g:i A', strtotime($event->publish)) . ')' : null) . '</a></div>';
+            endforeach;
+        endif;
         $d++;
     else:
         echo '&nbsp;';
@@ -25,7 +44,8 @@ else:
 endif;
 ?></td>
 <?php endfor; ?>
-    </tr>
+        </tr>
 <?php $i++; ?>
 <?php endwhile; ?>
-</table>
+    </table>
+</div>

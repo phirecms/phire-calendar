@@ -11,13 +11,20 @@ return [
         'src'        => __DIR__ . '/../src',
         'events' => [
             [
-                'name'     => 'app.send',
+                'name'     => 'app.send.pre',
+                'action'   => 'Phire\Calendar\Event\Calendar::init',
+                'priority' => 1000
+            ],
+            [
+                'name'     => 'app.send.post',
                 'action'   => 'Phire\Calendar\Event\Calendar::parse',
                 'priority' => 1000
             ]
         ],
         'weekdays' => [
             'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
-        ]
+        ],
+        'range'        => '6', // examples: 12, 12-12, EOY, SOY-EOY
+        'range_format' => 'M Y'
     ]
 ];

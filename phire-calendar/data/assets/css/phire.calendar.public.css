@@ -1,3 +1,66 @@
 /**
- * Reviews Module Public Style Sheet
+ * Calendar Module Public Style Sheet
  */
+
+#phire-calendar-div {
+    margin: 0 auto;
+    padding: 0;
+    width: 720px;
+    font-family: arial, sans-serif;
+    font-size: 0.825em;
+}
+
+#phire-calendar-select {
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+#phire-calendar-table {
+    margin: 20px auto 20px auto;
+    padding: 0;
+    width: 100%;
+    border-right: solid 1px #ddd;
+    border-bottom: solid 1px #ddd;
+}
+
+#phire-calendar-table tr {
+    margin: 0;
+    padding: 0;
+}
+
+#phire-calendar-table tr > th {
+    margin: 0;
+    padding: 0;
+    border-left: solid 1px #ddd;
+    border-top: solid 1px #ddd;
+    background-color: #ddd;
+}
+
+#phire-calendar-table tr > td {
+    margin: 0;
+    padding: 0 0 20px 0;
+    min-width: 100px;
+    vertical-align: top;
+    border-left: solid 1px #ddd;
+    border-top: solid 1px #ddd;
+}
+
+#phire-calendar-table tr > td > h4 {
+    margin: 0 0 5px 0;
+    padding: 0 5px 5px 5px;
+    text-align: right;
+}
+
+#phire-calendar-table tr > td > div {
+    margin: 0 auto 3px auto;
+    padding: 3px;
+    font-size: 0.825em;
+    border: solid 1px #056493;
+    background-color: #4aa1ce;
+}
+
+#phire-calendar-table tr > td > div > a {
+    color: #fff;
+    text-decoration: none;
+}
