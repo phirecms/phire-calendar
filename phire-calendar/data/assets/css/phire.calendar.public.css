@@ -10,10 +10,23 @@
     font-size: 0.825em;
 }
 
+#phire-calendar-list-div {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    font-family: arial, sans-serif;
+    font-size: 0.825em;
+}
+
 #phire-calendar-select {
     margin: 0;
     padding: 0;
     float: right;
+}
+
+#phire-calendar-list-select {
+    margin: 0;
+    padding: 0;
 }
 
 #phire-calendar-table {
@@ -63,4 +76,35 @@
 #phire-calendar-table tr > td > div > a {
     color: #fff;
     text-decoration: none;
+}
+
+#phire-calendar-list {
+    margin: 20px auto 20px auto;
+    padding: 0;
+    width: 100%;
+}
+
+#phire-calendar-list > li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#phire-calendar-list > li > h3 {
+    margin: 0 auto;
+    padding: 6px;
+    border-top: dotted 1px #ccc;
+    border-bottom: dotted 1px #ccc;
+}
+
+#phire-calendar-list > li > ul {
+    margin: 0 auto;
+    padding: 5px 0 25px 0;
+}
+
+#phire-calendar-list > li > ul > li {
+    margin: 0;
+    padding: 3px 0 3px 20px;
+    list-style-type: none;
+    font-size: 0.825em;
 }

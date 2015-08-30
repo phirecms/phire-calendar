@@ -1,0 +1,20 @@
+<div id="phire-calendar-list-div">
+    <select id="phire-calendar-list-select" name="phire-calendar-list-select" onchange="window.location.href = window.location.href.substring(0, window.location.href.indexOf('?')) + '?date=' + this.value">
+<?php foreach ($monthOptions as $option => $value): ?>
+        <option value="<?=$option; ?>"<?php if ($date == $option): ?> selected="selected"<?php endif; ?>><?=$value; ?></option>
+<?php endforeach; ?>
+    </select>
+    <h2><?=date('F Y', strtotime($date)); ?></h2>
+    <ul id="phire-calendar-list">
+<?php foreach ($events as $day => $evts): ?>
+        <li>
+            <h3><?=date($day_format, strtotime($day)); ?></h3>
+            <ul>
+<?php foreach ($evts as $event): ?>
+                <li><a href="<?=BASE_PATH . $event->uri; ?>"><?=$event->title . (($time) ? ' (' . date('g:i A', strtotime($event->publish)) . ')' : null); ?></a></li>
+<?php endforeach; ?>
+            </ul>
+        </li>
+<?php endforeach; ?>
+    </ul>
+</div>

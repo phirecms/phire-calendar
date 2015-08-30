@@ -24,7 +24,10 @@ return [
         'weekdays' => [
             'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
         ],
-        'range'        => '6', // examples: 12, 12-12, EOY, SOY-EOY
-        'range_format' => 'M Y'
+        'range'             => '6', // examples: 12, 12-12, EOY, SOY-EOY
+        'range_format'      => 'M Y',
+        'day_format'        => 'D, M j',
+        'force_list'        => false,
+        'force_list_mobile' => true
     ]
 ];

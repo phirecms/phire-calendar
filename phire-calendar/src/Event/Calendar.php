@@ -24,11 +24,14 @@ class Calendar
             $roleId = (isset($sess->user)) ? $sess->user->role_id : null;
 
             $controller->view()->phire->calendar = new Model\Calendar([
-                'user_role_id' => $roleId,
-                'weekdays'     => $application->module('phire-calendar')['weekdays'],
-                'range'        => $application->module('phire-calendar')['range'],
-                'range_format' => $application->module('phire-calendar')['range_format'],
-                'date'         => $controller->request()->getQuery('date')
+                'user_role_id'      => $roleId,
+                'weekdays'          => $application->module('phire-calendar')['weekdays'],
+                'range'             => $application->module('phire-calendar')['range'],
+                'range_format'      => $application->module('phire-calendar')['range_format'],
+                'day_format'        => $application->module('phire-calendar')['day_format'],
+                'force_list'        => $application->module('phire-calendar')['force_list'],
+                'force_list_mobile' => $application->module('phire-calendar')['force_list_mobile'],
+                'date'              => $controller->request()->getQuery('date')
             ]);
         }
     }
@@ -79,11 +82,14 @@ class Calendar
 
                 foreach ($calendarIds as $cal) {
                     $calendar = new Model\Calendar([
-                        'user_role_id' => $roleId,
-                        'weekdays'     => $application->module('phire-calendar')['weekdays'],
-                        'range'        => $application->module('phire-calendar')['range'],
-                        'range_format' => $application->module('phire-calendar')['range_format'],
-                        'date'         => $controller->request()->getQuery('date')
+                        'user_role_id'      => $roleId,
+                        'weekdays'          => $application->module('phire-calendar')['weekdays'],
+                        'range'             => $application->module('phire-calendar')['range'],
+                        'range_format'      => $application->module('phire-calendar')['range_format'],
+                        'day_format'        => $application->module('phire-calendar')['day_format'],
+                        'force_list'        => $application->module('phire-calendar')['force_list'],
+                        'force_list_mobile' => $application->module('phire-calendar')['force_list_mobile'],
+                        'date'              => $controller->request()->getQuery('date')
                     ]);
                     $rendered = $calendar->getById($cal['id'], $cal['time']);
                     $body = str_replace(

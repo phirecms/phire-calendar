@@ -5,6 +5,7 @@ namespace Phire\Calendar\Model;
 use Phire\Content\Table;
 use Phire\Model\AbstractModel;
 use Pop\View\View;
+use Pop\Web\Mobile;
 
 class Calendar extends AbstractModel
 {
@@ -18,7 +19,11 @@ class Calendar extends AbstractModel
      */
     public function getById($tid, $time = false)
     {
-        $calendar = new View(__DIR__ . '/../../view/calendar.phtml');
+        if (($this->force_list) || (Mobile::isMobileDevice() && ($this->force_list_mobile))) {
+            $calendar = new View(__DIR__ . '/../../view/calendar-list.phtml');
+        } else {
+            $calendar = new View(__DIR__ . '/../../view/calendar.phtml');
+        }
 
         $sql = Table\Content::sql();
         $sql->select([
@@ -68,6 +73,7 @@ class Calendar extends AbstractModel
         $calendar->date         = $this->date;
         $calendar->time         = $time;
         $calendar->weekdays     = $this->weekdays;
+        $calendar->day_format   = $this->day_format;
         $calendar->numOfWeeks   = $this->getNumberOfWeeks();
         $calendar->monthOptions = $this->getMonthOptions();
         $calendar->startDay     = date('D', strtotime($this->date));
