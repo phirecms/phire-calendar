@@ -28,6 +28,7 @@ return [
         'range_format'      => 'M Y',
         'day_format'        => 'D, M j',
         'force_list'        => false,
-        'force_list_mobile' => true
+        'force_list_mobile' => true,
+        'show_all'          => true
     ]
 ];

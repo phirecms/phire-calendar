@@ -31,6 +31,7 @@ class Calendar
                 'day_format'        => $application->module('phire-calendar')['day_format'],
                 'force_list'        => $application->module('phire-calendar')['force_list'],
                 'force_list_mobile' => $application->module('phire-calendar')['force_list_mobile'],
+                'show_all'          => $application->module('phire-calendar')['show_all'],
                 'date'              => $controller->request()->getQuery('date')
             ]);
         }
@@ -89,10 +90,11 @@ class Calendar
                         'day_format'        => $application->module('phire-calendar')['day_format'],
                         'force_list'        => $application->module('phire-calendar')['force_list'],
                         'force_list_mobile' => $application->module('phire-calendar')['force_list_mobile'],
+                        'show_all'          => $application->module('phire-calendar')['show_all'],
                         'date'              => $controller->request()->getQuery('date')
                     ]);
                     $rendered = $calendar->getById($cal['id'], $cal['time']);
-                    $body = str_replace(
+                    $body     = str_replace(
                         $cal['replace'],
                         $rendered,
                         $body

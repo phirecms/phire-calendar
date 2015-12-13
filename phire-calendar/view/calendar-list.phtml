@@ -5,6 +5,7 @@
 <?php endforeach; ?>
     </select>
     <h2><?=date('F Y', strtotime($date)); ?></h2>
+<?php if (count($events) > 0): ?>
     <ul id="phire-calendar-list">
 <?php foreach ($events as $day => $evts): ?>
         <li>
@@ -17,4 +18,7 @@
         </li>
 <?php endforeach; ?>
     </ul>
+<?php else: ?>
+    <p>There are currently no events for this month.</p>
+<?php endif; ?>
 </div>
