@@ -178,6 +178,82 @@ class Calendar extends AbstractModel
         if (!array_key_exists($this->date, $monthOptions)) {
             reset($monthOptions);
             $this->date = key($monthOptions);
+
+            $sql = Table\Content::sql();
+
+            $sql->select([
+                'id'        => DB_PREFIX . 'content.id',
+                'type_id'   => DB_PREFIX . 'content.type_id',
+                'title'     => DB_PREFIX . 'content.title',
+                'uri'       => DB_PREFIX . 'content.uri',
+                'slug'      => DB_PREFIX . 'content.slug',
+                'status'    => DB_PREFIX . 'content.status',
+                'roles'     => DB_PREFIX . 'content.roles',
+                'publish'   => DB_PREFIX . 'content.publish',
+                'expire'    => DB_PREFIX . 'content.expire'
+            ]);
+
+            $dateAry = explode('-', $this->date);
+            $start   = $dateAry[0] . '-' . $dateAry[1] . '-01 00:00:00';
+            $end     = $dateAry[0] . '-' . $dateAry[1] . '-' .
+                date('t', strtotime($dateAry[0] . '-' . $dateAry[1] . '-01')) . ' 23:59:59';
+
+            $sql->select()
+                ->where('type_id = :type_id')
+                ->where('status = :status')
+                ->where('publish >= :publish1')
+                ->where('publish <= :publish2');
+
+            $sql->select()->orderBy('publish', 'ASC');
+
+            $params = [
+                'type_id' => $tid,
+                'status'  => 1,
+                'publish' => [
+                    $start,
+                    $end
+                ]
+            ];
+
+            $content = Table\Content::execute((string)$sql, $params)->rows();
+            $events  = [];
+
+            foreach ($content as $c) {
+                $day = substr($c->publish, 0, strpos($c->publish, ' '));
+                $mon = substr($day, 0, strrpos($day, '-'));
+                if (!isset($events[$day])) {
+                    $events[$day] = [];
+                }
+
+                $roles = unserialize($c->roles);
+                if ((count($roles) == 0) || ((null !== $this->user_role_id) && in_array($this->user_role_id, $roles))) {
+                    $events[$day][] = $c;
+                }
+
+                if (null !== $c->expire) {
+                    $start       = (int)substr($day, (strrpos($day, '-') + 1)) + 1;
+                    $expireDay   = substr($c->expire, 0, strpos($c->expire, ' '));
+                    $expireTime  = substr($c->expire, (strpos($c->expire, ' ') + 1));
+                    $end         = (int)substr($expireDay, (strrpos($expireDay, '-') + 1));
+                    $expireMonth = substr($expireDay, 0, strrpos($expireDay, '-'));
+
+                    $daysBetween  = strtotime($expireDay) - strtotime($day);
+                    $hoursBetween = strtotime($expireTime) - strtotime('00:00:00');
+                    if (($daysBetween > 86400) || (($daysBetween == 86400) && ($hoursBetween >= 21600))) {
+                        for ($i = $start; $i <= $end; $i++) {
+                            if ($i <= $calendar->numOfDays) {
+                                $expDay = $calendar->date . '-' . ((strlen($i) == 1) ? '0' . $i : $i);
+                                if (!isset($events[$expDay])) {
+                                    $events[$expDay] = [];
+                                }
+                                if ((count($roles) == 0) || ((null !== $this->user_role_id) && in_array($this->user_role_id, $roles))) {
+                                    $events[$expDay][] = $c;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         $calendar->date         = $this->date;
