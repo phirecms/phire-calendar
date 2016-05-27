@@ -1,5 +1,16 @@
 <?php
+/**
+ * Phire Calendar Module
+ *
+ * @link       https://github.com/phirecms/phire-calendar
+ * @author     Nick Sagona, III <dev@nolainteractive.com>
+ * @copyright  Copyright (c) 2009-2016 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @license    http://www.phirecms.org/license     New BSD License
+ */
 
+/**
+ * @namespace
+ */
 namespace Phire\Calendar\Model;
 
 use Phire\Content\Table;
@@ -7,6 +18,16 @@ use Phire\Model\AbstractModel;
 use Pop\View\View;
 use Pop\Web\Mobile;
 
+/**
+ * Calendar Model class
+ *
+ * @category   Phire\Calendar
+ * @package    Phire\Calendar
+ * @author     Nick Sagona, III <dev@nolainteractive.com>
+ * @copyright  Copyright (c) 2009-2016 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @license    http://www.phirecms.org/license     New BSD License
+ * @version    1.0.0
+ */
 class Calendar extends AbstractModel
 {
 
